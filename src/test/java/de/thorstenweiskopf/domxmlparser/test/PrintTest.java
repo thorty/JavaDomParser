@@ -5,7 +5,7 @@
  */
 package de.thorstenweiskopf.domxmlparser.test;
 
-import de.thorstenweiskopf.domxmlparser.DomParser;
+import de.thorstenweiskopf.domxmlparser.MyDomParserForCompanyXML;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
