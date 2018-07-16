@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
@@ -21,6 +23,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -128,5 +133,34 @@ public class MyDomParser {
         is.setCharacterStream(new StringReader(src));
         return is;
     }    
+    
+    
+   /***
+     * @param int number of the company you wan't to scan
+     * @param String rootElementName you wan't to scan
+     * @param String elementTagName of rootElementName you wan't to find
+     * @return List<String> of all the Text within a specific elementTagName from a specific rootElementName at a specific number 
+     * @throws MyDomParserException 
+     */
+    public List<String> getAllTextElementsFromRootElementbyTagName(int elementNumber, String rootElementName, String elementTagName) throws MyDomParserException{
+        ArrayList<String> list = new ArrayList<String>();
+        Element rootElement = doc.getDocumentElement();        
+        NodeList companysNL = rootElement.getElementsByTagName(rootElementName);
+        //System.out.println("companysNL.getLength(): "+companysNL.getLength());
+        if(elementNumber<=companysNL.getLength()){
+            Node firstCompany = companysNL.item(elementNumber);
+            if (firstCompany instanceof Element) {
+                NodeList nList_nickname = ((Element) firstCompany).getElementsByTagName(elementTagName);
+                for (int temp = 0; temp < nList_nickname.getLength(); temp++) {
+                    //String nick = nList_nickname.item(temp).getTextContent();
+                    list.add(nList_nickname.item(temp).getTextContent());
+                   //System.out.println(nick);
+                }
+            }
+        }
+        return list;
+    }
+    
+    
     
 }

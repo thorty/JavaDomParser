@@ -170,6 +170,51 @@ public class TestParser {
         assertEquals("h4ffl", nickNames.get(1));
         assertEquals(2, nickNames.size());        
     }
+
+
+    @Test
+    public void testGetAllTextElementsFromRootElementbyTagName() throws MyDomParserException{
+       String src = "<?xml version=\"1.0\"?>\n"
+               + "<companys>\n" +
+                    "<company id=\"1\">\n" +
+                    "	<staff id=\"1001\">\n" +
+                    "		<firstname>Thorsten</firstname>\n" +
+                    "		<lastname>Weiskopf</lastname>\n" +
+                    "		<nickname>thorty</nickname>\n" +
+                    "		<salary>100000</salary>\n" +
+                    "	</staff>\n" +
+                    "	<staff id=\"2001\">\n" +
+                    "		<firstname>Thomas</firstname>\n" +
+                    "		<lastname>Brunner</lastname>\n" +
+                    "		<nickname>h4ffl</nickname>\n" +
+                    "		<salary>200000</salary>\n" +
+                    "	</staff>\n" +
+                    "</company>\n" +
+                    "<company id=\"2\">\n" +
+                    "	<staff id=\"1001\">\n" +
+                    "		<firstname>bla</firstname>\n" +
+                    "		<lastname>foo</lastname>\n" +
+                    "		<nickname>fb</nickname>\n" +
+                    "		<salary>0</salary>\n" +
+                    "	</staff>\n" +
+                    "	<staff id=\"2001\">\n" +
+                    "		<firstname>muh</firstname>\n" +
+                    "		<lastname>pah</lastname>\n" +
+                    "		<nickname>mp</nickname>\n" +
+                    "		<salary>0</salary>\n" +
+                    "	</staff>\n" +
+                    "</company>\n" +
+                 "</companys>";
+
+        MyDomParserForCompanyXML domParser = new MyDomParserForCompanyXML();
+        domParser.setSrc(src);
+        assertThat(domParser.getSrc(), containsString("nickname")); 
+        List<String> nickNames = domParser.getAllTextElementsFromRootElementbyTagName(0, "company", "nickname");
+        assertEquals("thorty", nickNames.get(0));
+        assertEquals("h4ffl", nickNames.get(1));
+        assertEquals(2, nickNames.size());        
+    }
+    
     
     
 }
