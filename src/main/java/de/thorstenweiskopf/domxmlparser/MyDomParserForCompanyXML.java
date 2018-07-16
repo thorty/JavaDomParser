@@ -44,34 +44,32 @@ public class MyDomParserForCompanyXML extends MyDomParser{
         return list;
         
     }
-
+  
     /***
-     * 
+     * @param int number of the company you wan't to scan
      * @return List<String> of all the nicknames of the first company
      * @throws MyDomParserException 
      */
-    public List<String> getAllNickNamesFromCompanyOne() throws MyDomParserException{
+    public List<String> getAllNickNamesFromCompany(int elementNumber) throws MyDomParserException{
         ArrayList<String> list = new ArrayList<String>();
-        if (doc != null){            
-            Node firstCompanyNode = doc.getFirstChild().getFirstChild().getFirstChild();
-            System.out.println(firstCompanyNode.getChildNodes().toString());
-            if(firstCompanyNode instanceof Element) {
-                Element companyOneElement = (Element) firstCompanyNode;
-                companyOneElement.getElementsByTagName("nickname");
-                NodeList nList = doc.getElementsByTagName("nickname");
-                for (int temp = 0; temp < nList.getLength(); temp++) {
-                    String nick = nList.item(temp).getTextContent();
-                    System.out.println(nick);
-                    list.add(nick);
+        Element rootElement = doc.getDocumentElement();
+        
+        NodeList companysNL = rootElement.getElementsByTagName("company");
+        //System.out.println("companysNL.getLength(): "+companysNL.getLength());
+        if(elementNumber<=companysNL.getLength()){
+            Node firstCompany = companysNL.item(elementNumber);
+            if (firstCompany instanceof Element) {
+                NodeList nList_nickname = ((Element) firstCompany).getElementsByTagName("nickname");
+                for (int temp = 0; temp < nList_nickname.getLength(); temp++) {
+                    //String nick = nList_nickname.item(temp).getTextContent();
+                    list.add(nList_nickname.item(temp).getTextContent());
+                   //System.out.println(nick);
                 }
             }
-        }else {
-            throw new MyDomParserException("No XML doc available.");
         }
-        return list;
         
+        return list;
     }    
-    
   
     
 }

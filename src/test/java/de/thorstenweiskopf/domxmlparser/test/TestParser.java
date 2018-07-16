@@ -84,7 +84,7 @@ public class TestParser {
         }
     }
                    
-    @Test
+    @Test 
     public void testGetAllNickNames() throws MyDomParserException{
        String src = "<?xml version=\"1.0\"?>\n"
                + "<companys>\n" +
@@ -164,11 +164,12 @@ public class TestParser {
 
         MyDomParserForCompanyXML domParser = new MyDomParserForCompanyXML();
         domParser.setSrc(src);
-        assertThat(domParser.getSrc(), containsString("nickname"));                    
-        List<String> nickNames = domParser.getAllNickNamesFromCompanyOne();
+        assertThat(domParser.getSrc(), containsString("nickname")); 
+        List<String> nickNames = domParser.getAllNickNamesFromCompany(0);
         assertEquals("thorty", nickNames.get(0));
         assertEquals("h4ffl", nickNames.get(1));
         assertEquals(2, nickNames.size());        
-    }       
+    }
+    
     
 }
